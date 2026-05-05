@@ -5,6 +5,13 @@ from src.db import init_db, get_clients, add_client
 st.set_page_config(layout="wide", page_title="Marketing Finance App")
 init_db()
 
+st.sidebar.title("Navigation")
+page = st.sidebar.selectbox("Go to", ["Home", "Clients", "Campaigns", "Finances"])
+if page == "Campaigns":
+    st.switch_page("pages/2_Campaigns.py")
+if page == "Finances":
+    st.switch_page("pages/3_Finances.py")
+
 tab1, tab2 = st.tabs(["📊 Clients", "➕ Add Client"])
 
 with tab1:

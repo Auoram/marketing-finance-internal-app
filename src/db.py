@@ -21,8 +21,20 @@ def init_db():
             channel TEXT,
             spend REAL,
             roi REAL,
+            clicks INTEGER,
             status TEXT DEFAULT 'active',
             FOREIGN KEY(client_id) REFERENCES clients (id)
+        )
+    ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS invoices (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            client_id INTEGER,
+            amount REAL,
+            hours_tracked REAL,
+            status TEXT DEFAULT 'pending',
+            due_date DATE,
+            FOREIGN KEY(client_id) REFERENCES clients(id)
         )
     ''')
     conn.commit()
@@ -49,3 +61,12 @@ def add_campaign(client_id, channel, spend, roi):
                  (client_id, channel, spend, roi))
     conn.commit()
     conn.close()
+
+def seed_campaigns():
+    df = pd.read_csv('data/campaigns.csv')
+    conn = sqlite3.connect('app.db')
+    df.to_sql('campaigns', conn, if_exists='append', index=False)
+    conn.close()
+    print('Seeded 100 campaigns!')
+
+if __name__ == "__main__": init_db(); print("DB ready!")
