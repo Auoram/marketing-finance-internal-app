@@ -6,11 +6,15 @@ st.set_page_config(layout="wide", page_title="Marketing Finance App")
 init_db()
 
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Go to", ["Home", "Clients", "Campaigns", "Finances"])
+page = st.sidebar.selectbox("Go to", ["Home", "Clients", "Campaigns", "Finances","Content", "Analytics"])
 if page == "Campaigns":
     st.switch_page("pages/2_Campaigns.py")
 if page == "Finances":
     st.switch_page("pages/3_Finances.py")
+if page == "Content":
+    st.switch_page("pages/4_Content_Calendar.py")
+if page == "Analytics":
+    st.switch_page("pages/5_Analytics.py")
 
 tab1, tab2 = st.tabs(["📊 Clients", "➕ Add Client"])
 

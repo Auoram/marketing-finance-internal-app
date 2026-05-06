@@ -37,6 +37,18 @@ def init_db():
             FOREIGN KEY(client_id) REFERENCES clients(id)
         )
     ''')
+    conn.execute('''
+        CREATE TABLE IF NOT EXISTS content (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            client_id INTEGER,
+            status TEXT DEFAULT 'draft',  -- draft/approved/published
+            file_path TEXT,
+            scheduled_date DATE,
+            version INTEGER DEFAULT 1,
+            FOREIGN KEY(client_id) REFERENCES clients(id)
+        )
+    ''')
     conn.commit()
     conn.close()
 
